@@ -76,10 +76,7 @@ class Disclosure extends StatelessWidget {
                           : child,
                     )
                   : AnimatedCrossFade(
-                      firstChild: secondary ??
-                          ConstrainedBox(
-                            constraints: const BoxConstraints.expand(),
-                          ),
+                      firstChild: secondary ?? Container(),
                       secondChild: child,
                       crossFadeState: state.closed
                           ? CrossFadeState.showFirst
