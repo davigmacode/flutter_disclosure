@@ -1,7 +1,10 @@
 library disclosure;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/controller.dart';
+export 'src/transition.dart';
+export 'src/layout.dart';
+export 'src/view.dart';
+export 'src/button.dart';
+export 'src/icon.dart';
+export 'src/tile.dart';
+export 'src/widget.dart';

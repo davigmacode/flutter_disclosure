@@ -1,5 +1,5 @@
-import 'package:disclosure/src/controller.dart';
 import 'package:flutter/widgets.dart';
+import 'controller.dart';
 
 class DisclosureView extends StatelessWidget {
   const DisclosureView({
