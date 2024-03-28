@@ -56,8 +56,8 @@ class Disclosure extends StatelessWidget {
       ),
       child: DisclosureConsumer(
         builder: (context, state, _) {
-          final needDivider =
-              header != null && (state.closed || secondary != null);
+          final hasChild = state.opened || secondary != null;
+          final needDivider = header != null && hasChild;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
