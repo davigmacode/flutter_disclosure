@@ -22,7 +22,7 @@ class DisclosureIcon extends Icon {
   Widget build(BuildContext context) {
     return DisclosureConsumer(builder: (context, state, child) {
       return AnimatedRotation(
-        turns: state.opened ? 2 : 0,
+        turns: state.opened ? .5 : 0,
         duration: duration,
         curve: curve,
         child: super.build(context),
