@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'controller.dart';
 
+/// Determines button behavior based on the disclosure state
 typedef DisclosureButtonCallback = VoidCallback Function(
   DisclosureController state,
 );
 
+/// Invoked to construct the button's container
 typedef DisclosureButtonBuilder = Widget Function(
   BuildContext context,
   VoidCallback action,
@@ -12,17 +14,21 @@ typedef DisclosureButtonBuilder = Widget Function(
 );
 
 abstract class DisclosureButtonAction {
+  /// Inverts the disclosure state (open/closed)
   static const DisclosureButtonCallback toggle = _toggle;
   static VoidCallback _toggle(DisclosureController state) => state.toggle;
 
+  /// Set the disclosure state to opened
   static const DisclosureButtonCallback open = _open;
   static VoidCallback _open(DisclosureController state) => state.open;
 
+  /// Set the disclosure state to closed
   static const DisclosureButtonCallback close = _close;
   static VoidCallback _close(DisclosureController state) => state.close;
 }
 
 abstract class DisclosureButtonWrapper {
+  /// Use [GestureDetector] as disclosure button wrapper
   static const basic = _basic;
   static Widget _basic(
     BuildContext context,
@@ -35,6 +41,7 @@ abstract class DisclosureButtonWrapper {
     );
   }
 
+  /// Use [InkWell] as disclosure button wrapper
   static const DisclosureButtonBuilder ripple = _ripple;
   static Widget _ripple(context, action, child) {
     return InkWell(
@@ -43,6 +50,7 @@ abstract class DisclosureButtonWrapper {
     );
   }
 
+  /// Use [OutlinedButton] as disclosure button wrapper
   static const DisclosureButtonBuilder outlined = _outlined;
   static Widget _outlined(context, action, child) {
     return OutlinedButton(
@@ -51,6 +59,7 @@ abstract class DisclosureButtonWrapper {
     );
   }
 
+  /// Use [FilledButton] as disclosure button wrapper
   static const DisclosureButtonBuilder filled = _filled;
   static Widget _filled(context, action, child) {
     return FilledButton(
@@ -59,6 +68,7 @@ abstract class DisclosureButtonWrapper {
     );
   }
 
+  /// Use [FilledButton.tonal] as disclosure button wrapper
   static const DisclosureButtonBuilder tonal = _tonal;
   static Widget _tonal(context, action, child) {
     return FilledButton.tonal(
@@ -67,6 +77,7 @@ abstract class DisclosureButtonWrapper {
     );
   }
 
+  /// Use [TextButton] as disclosure button wrapper
   static const DisclosureButtonBuilder text = _text;
   static Widget _text(context, action, child) {
     return TextButton(
@@ -75,6 +86,7 @@ abstract class DisclosureButtonWrapper {
     );
   }
 
+  /// Use [IconButton] as disclosure button wrapper
   static const DisclosureButtonBuilder icon = _icon;
   static Widget _icon(context, action, child) {
     return IconButton(
@@ -83,6 +95,7 @@ abstract class DisclosureButtonWrapper {
     );
   }
 
+  /// Use [IconButton.filled] as disclosure button wrapper
   static const DisclosureButtonBuilder iconFilled = _iconFilled;
   static Widget _iconFilled(context, action, child) {
     return IconButton.filled(
@@ -91,6 +104,7 @@ abstract class DisclosureButtonWrapper {
     );
   }
 
+  /// Use [IconButton.filledTonal] as disclosure button wrapper
   static const DisclosureButtonBuilder iconTonal = _iconTonal;
   static Widget _iconTonal(context, action, child) {
     return IconButton.filledTonal(
@@ -99,6 +113,7 @@ abstract class DisclosureButtonWrapper {
     );
   }
 
+  /// Use [IconButton.outlined] as disclosure button wrapper
   static const DisclosureButtonBuilder iconOutlined = _iconOutlined;
   static Widget _iconOutlined(context, action, child) {
     return IconButton.outlined(
@@ -108,7 +123,11 @@ abstract class DisclosureButtonWrapper {
   }
 }
 
+/// A button that controls the disclosure state.
 class DisclosureButton extends StatelessWidget {
+  /// Create a disclosure button
+  /// with toggle as default action
+  /// and [InkWell] as default wrapper.
   const DisclosureButton({
     super.key,
     this.action = DisclosureButtonAction.toggle,
@@ -116,74 +135,92 @@ class DisclosureButton extends StatelessWidget {
     required this.child,
   });
 
+  /// Create a disclosure close button
+  /// with [InkWell] as default wrapper
   const DisclosureButton.close({
     super.key,
     this.wrapper = DisclosureButtonWrapper.ripple,
     required this.child,
   }) : action = DisclosureButtonAction.close;
 
+  /// Create a disclosure open button
+  /// with [InkWell] as default wrapper
   const DisclosureButton.open({
     super.key,
     this.wrapper = DisclosureButtonWrapper.ripple,
     required this.child,
   }) : action = DisclosureButtonAction.open;
 
+  /// Create a disclosure button with [GestureDetector] as wrapper.
   const DisclosureButton.basic({
     super.key,
     this.action = DisclosureButtonAction.toggle,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.basic;
 
+  /// Create a disclosure button with [OutlinedButton] as wrapper.
   const DisclosureButton.outlined({
     super.key,
     this.action = DisclosureButtonAction.toggle,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.outlined;
 
+  /// Create a disclosure button with [FilledButton] as wrapper.
   const DisclosureButton.filled({
     super.key,
     this.action = DisclosureButtonAction.toggle,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.filled;
 
+  /// Create a disclosure button with [FilledButton.tonal] as wrapper.
   const DisclosureButton.tonal({
     super.key,
     this.action = DisclosureButtonAction.toggle,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.tonal;
 
+  /// Create a disclosure button with [TextButton] as wrapper.
   const DisclosureButton.text({
     super.key,
     this.action = DisclosureButtonAction.toggle,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.text;
 
+  /// Create a disclosure button with [IconButton] as wrapper.
   const DisclosureButton.icon({
     super.key,
     this.action = DisclosureButtonAction.toggle,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.icon;
 
+  /// Create a disclosure button with [IconButton.filled] as wrapper.
   const DisclosureButton.iconFilled({
     super.key,
     this.action = DisclosureButtonAction.toggle,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.iconFilled;
 
+  /// Create a disclosure button with [IconButton.filledTonal] as wrapper.
   const DisclosureButton.iconTonal({
     super.key,
     this.action = DisclosureButtonAction.toggle,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.iconTonal;
 
+  /// Create a disclosure button with [IconButton.outlined] as wrapper.
   const DisclosureButton.iconOutlined({
     super.key,
     this.action = DisclosureButtonAction.toggle,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.iconOutlined;
 
+  /// Determines button behavior based on the disclosure state
   final DisclosureButtonCallback action;
+
+  /// Invoked to construct the button's container
   final DisclosureButtonBuilder wrapper;
+
+  /// The widget below this widget in the tree.
   final Widget child;
 
   @override

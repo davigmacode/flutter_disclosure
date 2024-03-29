@@ -6,8 +6,7 @@ typedef DisclosureBuilder = Widget Function(
   Widget? child,
 );
 
-//--------------------------------------------------------
-
+/// Controller of the disclosure state and how it behaves
 class DisclosureController extends ChangeNotifier {
   DisclosureController({
     required bool closed,
@@ -27,6 +26,8 @@ class DisclosureController extends ChangeNotifier {
   bool get closed => _closed;
   bool get opened => !closed;
 
+  /// Set the disclosure state to new value
+  /// and notify its listeners.
   void assign(bool expanded) {
     if (_closed != expanded) {
       _closed = expanded;
@@ -35,30 +36,35 @@ class DisclosureController extends ChangeNotifier {
     }
   }
 
+  /// Inverts the disclosure state (open/closed)
   void toggle() {
     assign(!_closed);
   }
 
+  /// Set the disclosure state to closed
   void close() {
     assign(true);
     _onClose?.call();
   }
 
+  /// Set the disclosure state to opened
   void open() {
     assign(false);
     _onOpen?.call();
   }
 }
 
-//--------------------------------------------------------
-
+/// An inherited widget for a [DisclosureController],
+/// which updates its dependencies when the [notifier] is triggered
 class DisclosureProvider extends InheritedNotifier<DisclosureController> {
+  /// Creates a widget that provides [DisclosureController] to descendant.
   const DisclosureProvider({
     super.key,
     required DisclosureController controller,
     required super.child,
   }) : super(notifier: controller);
 
+  /// Create a disclosure provider using widget builder
   DisclosureProvider.builder({
     super.key,
     required DisclosureController controller,
@@ -71,6 +77,8 @@ class DisclosureProvider extends InheritedNotifier<DisclosureController> {
           ),
         );
 
+  /// The [DisclosureController] from the closest instance of
+  /// this class that encloses the given context.
   static DisclosureController of(BuildContext context) {
     final DisclosureProvider? result =
         context.dependOnInheritedWidgetOfExactType<DisclosureProvider>();
@@ -80,18 +88,19 @@ class DisclosureProvider extends InheritedNotifier<DisclosureController> {
   }
 }
 
-//--------------------------------------------------------
-
+/// A widget that consumes [DisclosureController] from the closest instance.
 class DisclosureConsumer extends StatelessWidget {
+  /// Create a disclosure consumer widget
   const DisclosureConsumer({
     super.key,
     required this.builder,
     this.child,
   });
 
+  /// The widget below this widget in the tree.
   final Widget? child;
 
-  /// Builder that gets called when the expansion changes
+  /// Builder that gets called when the disclosure changes.
   final DisclosureBuilder builder;
 
   @override

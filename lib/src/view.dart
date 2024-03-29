@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'controller.dart';
 
 class DisclosureView extends StatelessWidget {
+  /// Creates a box in which a single widget can be scrolled.
   const DisclosureView({
     super.key,
     this.minWidth,
@@ -13,6 +14,7 @@ class DisclosureView extends StatelessWidget {
     required this.child,
   });
 
+  /// Creates a disclosure view using builder and provides disclosure state
   DisclosureView.builder({
     super.key,
     this.minWidth,
@@ -28,12 +30,29 @@ class DisclosureView extends StatelessWidget {
           child: child,
         );
 
+  /// The minimum width that satisfies the constraints.
   final double? minWidth;
+
+  /// The maximum width that satisfies the constraints.
+  ///
+  /// Might be [double.infinity].
   final double? maxWidth;
+
+  /// The minimum height that satisfies the constraints.
   final double? minHeight;
+
+  /// The maximum height that satisfies the constraints.
+  ///
+  /// Might be [double.infinity].
   final double? maxHeight;
+
+  /// The additional constraints to impose on the child.
   final BoxConstraints? constraints;
+
+  /// The amount of space by which to inset the child.
   final EdgeInsetsGeometry? padding;
+
+  /// The widget below this widget in the tree.
   final Widget child;
 
   BoxConstraints get effectiveConstraints {

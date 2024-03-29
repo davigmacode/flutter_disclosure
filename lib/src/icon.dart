@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'controller.dart';
 
+/// Interactive icon indicating disclosure state
 class DisclosureIcon extends Icon {
+  /// Create an interactive disclosure icon
   const DisclosureIcon({
     super.key,
     IconData? icon,
@@ -15,7 +17,10 @@ class DisclosureIcon extends Icon {
   static const defaultDuration = Duration(milliseconds: 200);
   static const defaultCurve = Curves.linear;
 
+  /// The duration over which to animate the parameters of this widget.
   final Duration duration;
+
+  /// The curve to apply when animating the parameters of this widget.
   final Curve curve;
 
   @override
