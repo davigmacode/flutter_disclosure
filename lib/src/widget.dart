@@ -23,11 +23,22 @@ class Disclosure extends StatelessWidget {
     required this.child,
   });
 
+  /// An initial value indicates whether the disclosure state is closed or not
   final bool closed;
+
+  /// Triggered on disclosure state update
   final ValueChanged<bool>? onToggle;
+
+  /// Triggered on disclosure state update to opened
   final VoidCallback? onOpen;
+
+  /// Triggered on disclosure state update to closed
   final VoidCallback? onClose;
+
+  /// The duration over which to animate the parameters of this widget.
   final Duration duration;
+
+  /// The curve to apply when animating the parameters of this widget.
   final Curve curve;
 
   /// A function that wraps a new [content] with an animation that transitions the [content] in when the animation runs in the forward direction and out when the animation runs in the reverse direction. This is only called when a new [content] is set (not for each build), or when a new [transitionBuilder] is set. If a new [transitionBuilder] is set, then the transition is rebuilt for the current content and all previous children using the new [transitionBuilder]. The function must not return null.
@@ -38,6 +49,13 @@ class Disclosure extends StatelessWidget {
 
   /// The header remains persistent, while the collapsible section displays underneath.
   final Widget? header;
+
+  /// The widget displays a visual divider between the header and collapsible elements.
+  ///
+  /// If either the header or body element is collapsed or empty,
+  /// the widget automatically hides itself.
+  /// This prevents unnecessary visual clutter
+  /// when there's no separation needed.
   final Widget? divider;
 
   /// Replacement content for closed state.
@@ -60,38 +78,46 @@ class Disclosure extends StatelessWidget {
       ),
       child: DisclosureConsumer(
         builder: (context, state, _) {
+          final hasHeader = header != null;
           final hasChild = state.opened || secondary != null;
-          final needDivider = header != null && hasChild;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              header,
-              if (needDivider) divider,
-              transitionBuilder != null
-                  ? AnimatedSwitcher(
-                      duration: duration,
-                      switchInCurve: curve,
-                      switchOutCurve: curve,
-                      transitionBuilder: transitionBuilder!,
-                      layoutBuilder: layoutBuilder,
-                      child: state.closed
-                          ? (secondary ?? const SizedBox.shrink())
-                          : child,
-                    )
-                  : AnimatedCrossFade(
-                      firstChild: secondary ?? Container(),
-                      secondChild: child,
-                      crossFadeState: state.closed
-                          ? CrossFadeState.showFirst
-                          : CrossFadeState.showSecond,
-                      duration: duration,
-                      sizeCurve: curve,
-                      firstCurve: curve,
-                      secondCurve: curve,
-                    ),
-            ].whereType<Widget>().toList(growable: false),
-          );
+          final needDivider = hasHeader && hasChild;
+
+          Widget collapsible = transitionBuilder != null
+              ? AnimatedSwitcher(
+                  duration: duration,
+                  switchInCurve: curve,
+                  switchOutCurve: curve,
+                  transitionBuilder: transitionBuilder!,
+                  layoutBuilder: layoutBuilder,
+                  child: state.closed
+                      ? (secondary ?? const SizedBox.shrink())
+                      : child,
+                )
+              : AnimatedCrossFade(
+                  firstChild: secondary ?? Container(),
+                  secondChild: child,
+                  crossFadeState: state.closed
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  duration: duration,
+                  sizeCurve: curve,
+                  firstCurve: curve,
+                  secondCurve: curve,
+                );
+
+          if (hasHeader) {
+            collapsible = Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                header,
+                if (needDivider) divider,
+                collapsible,
+              ].whereType<Widget>().toList(growable: false),
+            );
+          }
+
+          return collapsible;
         },
       ),
     );
