@@ -1,3 +1,9 @@
-## 0.0.1
+## 1.0.0
 
-* TODO: Describe initial release.
+* Added disclosure controller, provider, and consumer.
+* Added main disclosure widget.
+* Added disclosure button widget.
+* Added disclosure icon widget.
+* Added disclosure view widget.
+* Added disclosure tile widget.
+* Customizable disclosure transition and layout.

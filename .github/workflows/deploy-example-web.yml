@@ -44,7 +44,7 @@ jobs:
       working-directory: ./example
       run: |
         flutter pub get
-        flutter build web --release --base-href="/flutter_disclosure/"
+        flutter build web --release --web-renderer=html --base-href="/flutter_disclosure/"
     - name: Upload production-ready build example
       uses: actions/upload-pages-artifact@v2
       with:
