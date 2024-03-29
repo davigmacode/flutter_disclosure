@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 const Card.outlined(
                   clipBehavior: Clip.hardEdge,
                   child: Disclosure(
-                    header: DisclosureInkWell(
+                    header: DisclosureButton(
                       child: ListTile(
                         title: Text('Disclosure Panel'),
                         trailing: DisclosureIcon(),
@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Card(
                   clipBehavior: Clip.hardEdge,
                   child: Disclosure(
-                    secondary: DisclosureButton(
+                    secondary: DisclosureButton.basic(
                       child: Image.network(
                         'https://picsum.photos/400?image=1',
                         fit: BoxFit.cover,
@@ -113,14 +113,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                           ),
                         ),
-                        DisclosureButton(
-                          wrapper: (context, action, child) {
-                            return OutlinedButton(
-                              onPressed: action,
-                              child: child,
-                            );
-                          },
-                          child: const Text('Close'),
+                        const DisclosureButton(
+                          wrapper: DisclosureButtonWrapper.outlined,
+                          child: Text('Close'),
                         ),
                         const SizedBox(height: 20),
                       ],
@@ -139,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   clipBehavior: Clip.hardEdge,
                   child: Disclosure(
                     closed: true,
-                    secondary: DisclosureInkWell(
+                    secondary: DisclosureButton(
                       child: Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text(
@@ -158,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                           ),
                           SizedBox(height: 10),
-                          DisclosureInkWell(
+                          DisclosureButton.text(
                             child: Text(
                               'Show less',
                               style: TextStyle(
