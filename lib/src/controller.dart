@@ -11,18 +11,18 @@ typedef DisclosureBuilder = Widget Function(
 class DisclosureController extends ChangeNotifier {
   DisclosureController({
     required bool closed,
-    ValueChanged<bool>? onChanged,
-    VoidCallback? onOpened,
-    VoidCallback? onClosed,
+    ValueChanged<bool>? onToggle,
+    VoidCallback? onOpen,
+    VoidCallback? onClose,
   })  : _closed = closed,
-        _onChanged = onChanged,
-        _onOpened = onOpened,
-        _onClosed = onClosed;
+        _onToggle = onToggle,
+        _onOpen = onOpen,
+        _onClose = onClose;
 
   bool _closed;
-  final ValueChanged<bool>? _onChanged;
-  final VoidCallback? _onOpened;
-  final VoidCallback? _onClosed;
+  final ValueChanged<bool>? _onToggle;
+  final VoidCallback? _onOpen;
+  final VoidCallback? _onClose;
 
   bool get closed => _closed;
   bool get opened => !closed;
@@ -31,7 +31,7 @@ class DisclosureController extends ChangeNotifier {
     if (_closed != expanded) {
       _closed = expanded;
       notifyListeners();
-      _onChanged?.call(_closed);
+      _onToggle?.call(_closed);
     }
   }
 
@@ -41,12 +41,12 @@ class DisclosureController extends ChangeNotifier {
 
   void close() {
     assign(true);
-    _onClosed?.call();
+    _onClose?.call();
   }
 
   void open() {
     assign(false);
-    _onOpened?.call();
+    _onOpen?.call();
   }
 }
 

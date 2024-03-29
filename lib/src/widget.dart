@@ -10,9 +10,9 @@ class Disclosure extends StatelessWidget {
   const Disclosure({
     super.key,
     this.closed = false,
-    this.onChanged,
-    this.onOpened,
-    this.onClosed,
+    this.onToggle,
+    this.onOpen,
+    this.onClose,
     this.duration = defaultDuration,
     this.curve = defaultCurve,
     this.transitionBuilder = DisclosureTransition.crossFade,
@@ -24,9 +24,9 @@ class Disclosure extends StatelessWidget {
   });
 
   final bool closed;
-  final ValueChanged<bool>? onChanged;
-  final VoidCallback? onOpened;
-  final VoidCallback? onClosed;
+  final ValueChanged<bool>? onToggle;
+  final VoidCallback? onOpen;
+  final VoidCallback? onClose;
   final Duration duration;
   final Curve curve;
 
@@ -39,7 +39,11 @@ class Disclosure extends StatelessWidget {
   /// The header remains persistent, while the collapsible section displays underneath.
   final Widget? header;
   final Widget? divider;
+
+  /// Replacement content for closed state.
   final Widget? secondary;
+
+  /// The widget displayed when the widget is opened. (Hidden when closed)
   final Widget child;
 
   static const defaultDuration = Duration(milliseconds: 200);
@@ -50,9 +54,9 @@ class Disclosure extends StatelessWidget {
     return DisclosureProvider(
       controller: DisclosureController(
         closed: closed,
-        onChanged: onChanged,
-        onOpened: onOpened,
-        onClosed: onClosed,
+        onToggle: onToggle,
+        onOpen: onOpen,
+        onClose: onClose,
       ),
       child: DisclosureConsumer(
         builder: (context, state, _) {
