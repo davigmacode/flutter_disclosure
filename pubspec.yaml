@@ -1,6 +1,6 @@
 name: disclosure
 description: Simplify building custom UIs with accessible controls for showing and hiding content, like accordion panels.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/davigmacode/flutter_disclosure
 
 topics:
@@ -8,15 +8,15 @@ topics:
   - disclosure
   - expandable
   - collapsible
-  - widget
+  - widgetarian
 
 funding:
  - https://buymeacoffee.com/davigmacode
  - https://ko-fi.com/davigmacode
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
-  flutter: ">=1.17.0"
+  sdk: '>=2.17.0 <4.0.0'
+  flutter: '>=2.0.0'
 
 dependencies:
   flutter:
@@ -25,7 +25,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
