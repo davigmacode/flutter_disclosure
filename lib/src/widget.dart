@@ -1,14 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'controller.dart';
-
-typedef DisclosureLayoutBuilder = AnimatedSwitcherLayoutBuilder;
-
-typedef DisclosureTransitionBuilder = AnimatedSwitcherTransitionBuilder;
-
-typedef DisclosureWrapper = Widget Function(
-  DisclosureController state,
-  Widget child,
-);
+import 'types.dart';
 
 /// Simplify building custom UIs with accessible controls
 /// for showing and hiding content, like accordion panels.
@@ -20,9 +12,9 @@ class Disclosure extends StatelessWidget {
     this.onToggle,
     this.onOpen,
     this.onClose,
-    this.duration = defaultDuration,
-    this.curve = defaultCurve,
-    this.wrapper = Disclosure.defaultWrapper,
+    this.duration,
+    this.curve,
+    this.wrapper,
     this.header,
     this.divider,
     this.secondary,
@@ -42,12 +34,12 @@ class Disclosure extends StatelessWidget {
   final VoidCallback? onClose;
 
   /// The duration over which to animate the parameters of this widget.
-  final Duration duration;
+  final Duration? duration;
 
   /// The curve to apply when animating the parameters of this widget.
-  final Curve curve;
+  final Curve? curve;
 
-  final DisclosureWrapper wrapper;
+  final DisclosureWrapper? wrapper;
 
   /// The header remains persistent, while the collapsible section displays underneath.
   final Widget? header;
@@ -76,6 +68,10 @@ class Disclosure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final effectiveDuration = duration ?? const Duration(milliseconds: 200);
+    final effectiveCurve = curve ?? Curves.linear;
+    final effectiveWrapper = wrapper ?? defaultWrapper;
+
     return DisclosureProvider(
       controller: DisclosureController(
         closed: closed,
@@ -95,10 +91,10 @@ class Disclosure extends StatelessWidget {
             crossFadeState: state.closed
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,
-            duration: duration,
-            sizeCurve: curve,
-            firstCurve: curve,
-            secondCurve: curve,
+            duration: effectiveDuration,
+            sizeCurve: effectiveCurve,
+            firstCurve: effectiveCurve,
+            secondCurve: effectiveCurve,
           );
 
           if (hasHeader) {
@@ -113,7 +109,7 @@ class Disclosure extends StatelessWidget {
             );
           }
 
-          return wrapper(state, collapsible);
+          return effectiveWrapper(state, collapsible);
         },
       ),
     );
