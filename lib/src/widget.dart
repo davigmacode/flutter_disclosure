@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'controller.dart';
 import 'types.dart';
+import 'theme.dart';
 
 /// Simplify building custom UIs with accessible controls
 /// for showing and hiding content, like accordion panels.
@@ -58,19 +59,12 @@ class Disclosure extends StatelessWidget {
   /// The widget displayed when the widget is opened. (Hidden when closed)
   final Widget child;
 
-  static const defaultDuration = Duration(milliseconds: 200);
-  static const defaultCurve = Curves.linear;
-
-  static const defaultWrapper = _defaultWrapper;
-  static Widget _defaultWrapper(DisclosureController state, Widget child) {
-    return child;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final effectiveDuration = duration ?? const Duration(milliseconds: 200);
-    final effectiveCurve = curve ?? Curves.linear;
-    final effectiveWrapper = wrapper ?? defaultWrapper;
+    final theme = DisclosureTheme.of(context);
+    final effectiveDuration = duration ?? theme.duration;
+    final effectiveCurve = curve ?? theme.curve;
+    final effectiveWrapper = wrapper ?? theme.wrapper;
 
     return DisclosureProvider(
       controller: DisclosureController(

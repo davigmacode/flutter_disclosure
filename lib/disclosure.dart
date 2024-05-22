@@ -6,3 +6,5 @@ export 'src/button.dart';
 export 'src/icon.dart';
 export 'src/tile.dart';
 export 'src/widget.dart';
+export 'src/theme.dart';
+export 'src/theme_data.dart';

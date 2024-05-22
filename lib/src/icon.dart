@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'controller.dart';
+import 'theme.dart';
 
 /// Interactive icon indicating disclosure state
 class DisclosureIcon extends Icon {
@@ -9,28 +10,32 @@ class DisclosureIcon extends Icon {
     IconData? icon,
     super.color,
     super.size,
-    this.duration = defaultDuration,
-    this.curve = defaultCurve,
-  }) : super(icon ?? defaultIcon);
-
-  static const defaultIcon = IconData(0xe246, fontFamily: 'MaterialIcons');
-  static const defaultDuration = Duration(milliseconds: 200);
-  static const defaultCurve = Curves.linear;
+    this.duration,
+    this.curve,
+  }) : super(icon);
 
   /// The duration over which to animate the parameters of this widget.
-  final Duration duration;
+  final Duration? duration;
 
   /// The curve to apply when animating the parameters of this widget.
-  final Curve curve;
+  final Curve? curve;
 
   @override
   Widget build(BuildContext context) {
+    final theme = DisclosureTheme.of(context);
+    final effectiveIcon = icon ?? theme.icon;
+    final effectiveDuration = duration ?? theme.duration;
+    final effectiveCurve = curve ?? theme.curve;
     return DisclosureConsumer(builder: (state, child) {
       return AnimatedRotation(
         turns: state.opened ? .5 : 0,
-        duration: duration,
-        curve: curve,
-        child: super.build(context),
+        duration: effectiveDuration,
+        curve: effectiveCurve,
+        child: Icon(
+          effectiveIcon,
+          color: color,
+          size: size,
+        ),
       );
     });
   }

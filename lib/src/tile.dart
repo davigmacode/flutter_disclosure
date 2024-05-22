@@ -3,6 +3,7 @@ import 'controller.dart';
 import 'widget.dart';
 import 'icon.dart';
 import 'types.dart';
+import 'theme.dart';
 
 /// A single-line ListTile with an expansion arrow icon
 /// that expands or collapses the tile to reveal or hide the children.
@@ -58,7 +59,8 @@ class DisclosureTile extends ListTile {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveInset = inset ?? const EdgeInsets.fromLTRB(25, 0, 0, 0);
+    final theme = DisclosureTheme.of(context);
+    final effectiveInset = inset ?? theme.tileInset;
     return Disclosure(
       closed: closed,
       onToggle: onToggle,
