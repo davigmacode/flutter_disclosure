@@ -97,7 +97,7 @@ class Disclosure extends StatelessWidget {
         onClose: onClose,
       ),
       child: DisclosureConsumer(
-        builder: (context, state, _) {
+        builder: (state, _) {
           final hasHeader = header != null;
           final hasChild = state.opened || secondary != null;
           final needDivider = hasHeader && hasChild;

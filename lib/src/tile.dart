@@ -38,7 +38,7 @@ class DisclosureTile extends ListTile {
     return Disclosure(
       closed: closed,
       header: DisclosureConsumer(
-        builder: (context, state, child) {
+        builder: (state, child) {
           return ListTile(
             title: title,
             subtitle: subtitle,

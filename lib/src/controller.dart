@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 typedef DisclosureBuilder = Widget Function(
-  BuildContext context,
   DisclosureController state,
   Widget? child,
 );
@@ -105,6 +104,6 @@ class DisclosureConsumer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return builder(context, DisclosureProvider.of(context), child);
+    return builder(DisclosureProvider.of(context), child);
   }
 }

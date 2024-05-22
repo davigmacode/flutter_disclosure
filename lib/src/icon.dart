@@ -25,7 +25,7 @@ class DisclosureIcon extends Icon {
 
   @override
   Widget build(BuildContext context) {
-    return DisclosureConsumer(builder: (context, state, child) {
+    return DisclosureConsumer(builder: (state, child) {
       return AnimatedRotation(
         turns: state.opened ? .5 : 0,
         duration: duration,

@@ -8,7 +8,6 @@ typedef DisclosureButtonCallback = VoidCallback Function(
 
 /// Invoked to construct the button's container
 typedef DisclosureButtonBuilder = Widget Function(
-  BuildContext context,
   VoidCallback action,
   Widget child,
 );
@@ -31,7 +30,6 @@ abstract class DisclosureButtonWrapper {
   /// Use [GestureDetector] as disclosure button wrapper
   static const basic = _basic;
   static Widget _basic(
-    BuildContext context,
     VoidCallback action,
     Widget child,
   ) {
@@ -43,7 +41,7 @@ abstract class DisclosureButtonWrapper {
 
   /// Use [InkWell] as disclosure button wrapper
   static const DisclosureButtonBuilder ripple = _ripple;
-  static Widget _ripple(context, action, child) {
+  static Widget _ripple(action, child) {
     return InkWell(
       onTap: action,
       child: child,
@@ -52,7 +50,7 @@ abstract class DisclosureButtonWrapper {
 
   /// Use [OutlinedButton] as disclosure button wrapper
   static const DisclosureButtonBuilder outlined = _outlined;
-  static Widget _outlined(context, action, child) {
+  static Widget _outlined(action, child) {
     return OutlinedButton(
       onPressed: action,
       child: child,
@@ -61,7 +59,7 @@ abstract class DisclosureButtonWrapper {
 
   /// Use [FilledButton] as disclosure button wrapper
   static const DisclosureButtonBuilder filled = _filled;
-  static Widget _filled(context, action, child) {
+  static Widget _filled(action, child) {
     return FilledButton(
       onPressed: action,
       child: child,
@@ -70,7 +68,7 @@ abstract class DisclosureButtonWrapper {
 
   /// Use [FilledButton.tonal] as disclosure button wrapper
   static const DisclosureButtonBuilder tonal = _tonal;
-  static Widget _tonal(context, action, child) {
+  static Widget _tonal(action, child) {
     return FilledButton.tonal(
       onPressed: action,
       child: child,
@@ -79,7 +77,7 @@ abstract class DisclosureButtonWrapper {
 
   /// Use [TextButton] as disclosure button wrapper
   static const DisclosureButtonBuilder text = _text;
-  static Widget _text(context, action, child) {
+  static Widget _text(action, child) {
     return TextButton(
       onPressed: action,
       child: child,
@@ -88,7 +86,7 @@ abstract class DisclosureButtonWrapper {
 
   /// Use [IconButton] as disclosure button wrapper
   static const DisclosureButtonBuilder icon = _icon;
-  static Widget _icon(context, action, child) {
+  static Widget _icon(action, child) {
     return IconButton(
       onPressed: action,
       icon: child,
@@ -97,7 +95,7 @@ abstract class DisclosureButtonWrapper {
 
   /// Use [IconButton.filled] as disclosure button wrapper
   static const DisclosureButtonBuilder iconFilled = _iconFilled;
-  static Widget _iconFilled(context, action, child) {
+  static Widget _iconFilled(action, child) {
     return IconButton.filled(
       onPressed: action,
       icon: child,
@@ -106,7 +104,7 @@ abstract class DisclosureButtonWrapper {
 
   /// Use [IconButton.filledTonal] as disclosure button wrapper
   static const DisclosureButtonBuilder iconTonal = _iconTonal;
-  static Widget _iconTonal(context, action, child) {
+  static Widget _iconTonal(action, child) {
     return IconButton.filledTonal(
       onPressed: action,
       icon: child,
@@ -115,7 +113,7 @@ abstract class DisclosureButtonWrapper {
 
   /// Use [IconButton.outlined] as disclosure button wrapper
   static const DisclosureButtonBuilder iconOutlined = _iconOutlined;
-  static Widget _iconOutlined(context, action, child) {
+  static Widget _iconOutlined(action, child) {
     return IconButton.outlined(
       onPressed: action,
       icon: child,
@@ -227,8 +225,8 @@ class DisclosureButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DisclosureConsumer(
       child: child,
-      builder: (context, state, child) {
-        return wrapper(context, action(state), child!);
+      builder: (state, child) {
+        return wrapper(action(state), child!);
       },
     );
   }
