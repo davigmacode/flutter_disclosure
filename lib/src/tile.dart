@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'controller.dart';
 import 'widget.dart';
 import 'icon.dart';
+import 'types.dart';
 
 /// A single-line ListTile with an expansion arrow icon
 /// that expands or collapses the tile to reveal or hide the children.
-@immutable
 class DisclosureTile extends ListTile {
   /// Creates a ListTile with an expansion arrow icon
   /// that expands or collapses the tile to reveal or hide the children.
@@ -17,12 +17,35 @@ class DisclosureTile extends ListTile {
     super.trailing,
     super.enabled = true,
     this.closed = true,
+    this.onToggle,
+    this.onOpen,
+    this.onClose,
+    this.duration,
+    this.curve,
+    this.wrapper,
     this.inset,
     required this.children,
   });
 
   /// An initial value indicates whether the disclosure state is closed or not
   final bool closed;
+
+  /// Triggered on disclosure state update
+  final ValueChanged<bool>? onToggle;
+
+  /// Triggered on disclosure state update to opened
+  final VoidCallback? onOpen;
+
+  /// Triggered on disclosure state update to closed
+  final VoidCallback? onClose;
+
+  /// The duration over which to animate the parameters of this widget.
+  final Duration? duration;
+
+  /// The curve to apply when animating the parameters of this widget.
+  final Curve? curve;
+
+  final DisclosureWrapper? wrapper;
 
   /// The widgets that are displayed when the tile expands.
   final List<Widget> children;
@@ -35,8 +58,15 @@ class DisclosureTile extends ListTile {
 
   @override
   Widget build(BuildContext context) {
+    final effectiveInset = inset ?? const EdgeInsets.fromLTRB(25, 0, 0, 0);
     return Disclosure(
       closed: closed,
+      onToggle: onToggle,
+      onOpen: onOpen,
+      onClose: onClose,
+      duration: duration,
+      curve: curve,
+      wrapper: wrapper,
       header: DisclosureConsumer(
         builder: (state, child) {
           return ListTile(
@@ -50,7 +80,7 @@ class DisclosureTile extends ListTile {
       ),
       child: ListView(
         shrinkWrap: true,
-        padding: inset ?? const EdgeInsets.fromLTRB(25, 0, 0, 0),
+        padding: effectiveInset,
         children: children,
       ),
     );
