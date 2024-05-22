@@ -3,6 +3,11 @@ import 'controller.dart';
 import 'transition.dart';
 import 'layout.dart';
 
+typedef DisclosureWrapper = Widget Function(
+  DisclosureController state,
+  Widget child,
+);
+
 /// Simplify building custom UIs with accessible controls
 /// for showing and hiding content, like accordion panels.
 class Disclosure extends StatelessWidget {
@@ -15,8 +20,9 @@ class Disclosure extends StatelessWidget {
     this.onClose,
     this.duration = defaultDuration,
     this.curve = defaultCurve,
-    this.transitionBuilder = DisclosureTransition.crossFade,
-    this.layoutBuilder = DisclosureLayout.defaults,
+    this.transitionBuilder,
+    this.layoutBuilder = Disclosure.defaultLayout,
+    this.wrapper = Disclosure.defaultWrapper,
     this.header,
     this.divider,
     this.secondary,
@@ -47,6 +53,8 @@ class Disclosure extends StatelessWidget {
   /// A function that wraps all of the children that are transitioning out, and the [child] that's transitioning in, with a widget that lays all of them out. This is called every time this widget is built. The function must not return null.
   final DisclosureLayoutBuilder layoutBuilder;
 
+  final DisclosureWrapper wrapper;
+
   /// The header remains persistent, while the collapsible section displays underneath.
   final Widget? header;
 
@@ -66,6 +74,16 @@ class Disclosure extends StatelessWidget {
 
   static const defaultDuration = Duration(milliseconds: 200);
   static const defaultCurve = Curves.linear;
+
+  /// The new child is placed in a [Stack] that sizes itself to match the
+  /// largest of the child or a previous child. The children are centered on
+  /// each other.
+  static const defaultLayout = AnimatedSwitcher.defaultLayoutBuilder;
+
+  static const defaultWrapper = _defaultWrapper;
+  static Widget _defaultWrapper(DisclosureController state, Widget child) {
+    return child;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +135,7 @@ class Disclosure extends StatelessWidget {
             );
           }
 
-          return collapsible;
+          return wrapper(state, collapsible);
         },
       ),
     );
