@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'controller.dart';
-import 'transition.dart';
-import 'layout.dart';
+
+typedef DisclosureLayoutBuilder = AnimatedSwitcherLayoutBuilder;
+
+typedef DisclosureTransitionBuilder = AnimatedSwitcherTransitionBuilder;
 
 typedef DisclosureWrapper = Widget Function(
   DisclosureController state,
