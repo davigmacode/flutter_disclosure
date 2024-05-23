@@ -226,7 +226,8 @@ class DisclosureButton extends StatelessWidget {
     return DisclosureConsumer(
       child: child,
       builder: (state, child) {
-        return wrapper(action(state), child!);
+        child = AbsorbPointer(child: child);
+        return wrapper(action(state), child);
       },
     );
   }
