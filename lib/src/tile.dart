@@ -5,11 +5,23 @@ import 'icon.dart';
 import 'types.dart';
 import 'theme.dart';
 
-/// A single-line ListTile with an expansion arrow icon
-/// that expands or collapses the tile to reveal or hide the children.
+/// A ListTile with an expansion arrow icon that expands or collapses
+/// the tile to reveal or hide its children.
+///
+/// This widget inherits properties of a regular `ListTile`,
+/// but adds the ability to manage a disclosure state.
 class DisclosureTile extends ListTile {
-  /// Creates a ListTile with an expansion arrow icon
-  /// that expands or collapses the tile to reveal or hide the children.
+  /// Creates a DisclosureTile.
+  ///
+  /// * The `closed` property determines the initial state of the disclosure (open or closed).
+  /// * The `onToggle` callback is invoked when the disclosure state changes.
+  /// * The `onOpen` callback is invoked when the disclosure is opened.
+  /// * The `onClose` callback is invoked when the disclosure is closed.
+  /// * The `duration` property controls the animation duration for state changes.
+  /// * The `curve` property controls the animation curve for state changes.
+  /// * The `wrapper` property allows customization of the overall disclosure wrapper.
+  /// * The `inset` property specifies padding for the children.
+  /// * The `children` property defines the widgets that are displayed when the tile expands.
   const DisclosureTile({
     super.key,
     super.title,
@@ -30,32 +42,34 @@ class DisclosureTile extends ListTile {
     this.children = const [],
   });
 
-  /// An initial value indicates whether the disclosure state is closed or not
+  /// Whether the disclosure is initially closed.
   final bool closed;
 
-  /// Triggered on disclosure state update
+  /// A callback that is invoked when the disclosure state changes.
   final ValueChanged<bool>? onToggle;
 
-  /// Triggered on disclosure state update to opened
+  /// A callback that is invoked when the disclosure is opened.
   final VoidCallback? onOpen;
 
-  /// Triggered on disclosure state update to closed
+  /// A callback that is invoked when the disclosure is closed.
   final VoidCallback? onClose;
 
-  /// The duration over which to animate the parameters of this widget.
+  /// The duration over which to animate the disclosure state changes.
   final Duration? duration;
 
-  /// The curve to apply when animating the parameters of this widget.
+  /// The curve to apply when animating the disclosure state changes.
   final Curve? curve;
 
+  /// A widget that wraps the entire disclosure content, allowing customization.
   final DisclosureWrapper? wrapper;
+
+  /// Specifies padding for the children.
+  final EdgeInsetsGeometry? inset;
 
   /// The widgets that are displayed when the tile expands.
   final List<Widget> children;
 
-  /// Specifies padding for children.
-  final EdgeInsetsGeometry? inset;
-
+  /// Provides the default trailing icon if no trailing widget is specified.
   Widget? get defaultTrailing =>
       children.isNotEmpty ? const DisclosureIcon() : null;
 
@@ -75,6 +89,7 @@ class DisclosureTile extends ListTile {
     final theme = DisclosureTheme.of(context);
     final effectiveInset = inset ?? theme.tileInset;
     return Disclosure(
+      key: key,
       closed: closed,
       onToggle: onToggle,
       onOpen: onOpen,

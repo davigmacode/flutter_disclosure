@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'controller.dart';
 import 'theme.dart';
 
-/// Interactive icon indicating disclosure state
+/// An interactive icon that visually indicates the disclosure state
+/// (open or closed) and allows toggling the state.
 class DisclosureIcon extends Icon {
-  /// Create an interactive disclosure icon
+  /// Creates an interactive disclosure icon.
+  ///
+  /// The `icon` property specifies the icon to be used.
+  /// The `duration` property controls the animation duration for state changes.
+  /// The `curve` property controls the animation curve for state changes.
   const DisclosureIcon({
     super.key,
     IconData? icon,

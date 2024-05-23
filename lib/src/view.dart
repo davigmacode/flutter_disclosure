@@ -1,8 +1,16 @@
 import 'package:flutter/widgets.dart';
 import 'controller.dart';
 
+/// A widget that provides a scrollable container for a single child,
+/// often used within a `Disclosure` widget.
 class DisclosureView extends StatelessWidget {
-  /// Creates a box in which a single widget can be scrolled.
+  /// Creates a DisclosureView.
+  ///
+  /// * The `minWidth`, `maxWidth`, `minHeight`, and `maxHeight` properties
+  /// control the minimum and maximum dimensions of the scrollable area.
+  /// * The `constraints` property allows further customization of the layout.
+  /// * The `padding` property adds space around the child.
+  /// * The `child` property specifies the content to be scrolled.
   const DisclosureView({
     super.key,
     this.minWidth,
@@ -14,7 +22,10 @@ class DisclosureView extends StatelessWidget {
     required this.child,
   });
 
-  /// Creates a disclosure view using builder and provides disclosure state
+  /// Creates a DisclosureView using a builder and provides the disclosure state.
+  ///
+  /// The `builder` callback receives the `DisclosureController` and the child.
+  /// This allows for dynamic content based on the disclosure state.
   DisclosureView.builder({
     super.key,
     this.minWidth,
@@ -55,6 +66,7 @@ class DisclosureView extends StatelessWidget {
   /// The widget below this widget in the tree.
   final Widget child;
 
+  /// Calculates the effective constraints based on the provided properties.
   BoxConstraints get effectiveConstraints {
     return (constraints ?? const BoxConstraints()).copyWith(
       minWidth: minWidth,

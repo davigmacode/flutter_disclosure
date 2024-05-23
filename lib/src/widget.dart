@@ -4,10 +4,22 @@ import 'types.dart';
 import 'theme.dart';
 import 'group.dart';
 
-/// Simplify building custom UIs with accessible controls
-/// for showing and hiding content, like accordion panels.
+/// A versatile widget for creating accessible and visually appealing disclosures,
+/// commonly used for accordion-style content.
 class Disclosure extends StatelessWidget {
-  /// Create a disclosure widget
+  /// Creates a Disclosure widget.
+  ///
+  /// * The `closed` property determines the initial state of the disclosure (open or closed).
+  /// * The `onToggle` callback is invoked when the disclosure state changes.
+  /// * The `onOpen` callback is invoked when the disclosure is opened.
+  /// * The `onClose` callback is invoked when the disclosure is closed.
+  /// * The `duration` property controls the animation duration for state changes.
+  /// * The `curve` property controls the animation curve for state changes.
+  /// * The `wrapper` property allows customization of the overall disclosure wrapper.
+  /// * The `header` property defines the content that remains visible in the closed state.
+  /// * The `divider` property displays a visual divider between the header and collapsible content.
+  /// * The `secondary` property provides alternative content for the closed state.
+  /// * The `child` property specifies the content that is hidden when closed and revealed when opened.
   const Disclosure({
     super.key,
     this.closed = true,
@@ -23,41 +35,37 @@ class Disclosure extends StatelessWidget {
     required this.child,
   });
 
-  /// An initial value indicates whether the disclosure state is closed or not
+  /// Whether the disclosure is initially closed.
   final bool closed;
 
-  /// Triggered on disclosure state update
+  /// A callback that is invoked when the disclosure state changes.
   final ValueChanged<bool>? onToggle;
 
-  /// Triggered on disclosure state update to opened
+  /// A callback that is invoked when the disclosure is opened.
   final VoidCallback? onOpen;
 
-  /// Triggered on disclosure state update to closed
+  /// A callback that is invoked when the disclosure is closed.
   final VoidCallback? onClose;
 
-  /// The duration over which to animate the parameters of this widget.
+  /// The duration over which to animate the disclosure state changes.
   final Duration? duration;
 
-  /// The curve to apply when animating the parameters of this widget.
+  /// The curve to apply when animating the disclosure state changes.
   final Curve? curve;
 
+  /// A widget that wraps the entire disclosure content, allowing customization.
   final DisclosureWrapper? wrapper;
 
-  /// The header remains persistent, while the collapsible section displays underneath.
+  /// The content that remains visible in the closed state.
   final Widget? header;
 
-  /// The widget displays a visual divider between the header and collapsible elements.
-  ///
-  /// If either the header or body element is collapsed or empty,
-  /// the widget automatically hides itself.
-  /// This prevents unnecessary visual clutter
-  /// when there's no separation needed.
+  /// A visual divider between the header and collapsible content.
   final Widget? divider;
 
-  /// Replacement content for closed state.
+  /// Alternative content for the closed state.
   final Widget? secondary;
 
-  /// The widget displayed when the widget is opened. (Hidden when closed)
+  /// The content that is hidden when closed and revealed when opened.
   final Widget child;
 
   @override

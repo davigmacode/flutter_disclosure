@@ -8,6 +8,14 @@ typedef DisclosureBuilder = Widget Function(
 
 /// Controller of the disclosure state and how it behaves
 class DisclosureController extends ChangeNotifier {
+  /// Creates a DisclosureController instance.
+  ///
+  /// * The `key` property uniquely identifies the disclosure within a group.
+  /// * The `group` property specifies the [DisclosureGroupController] to which the disclosure belongs.
+  /// * The `closed` property determines the initial state of the disclosure.
+  /// * The `onToggle` callback is invoked when the disclosure state changes.
+  /// * The `onOpen` callback is invoked when the disclosure is opened.
+  /// * The `onClose` callback is invoked when the disclosure is closed.
   DisclosureController({
     Key? key,
     DisclosureGroupController? group,
@@ -36,7 +44,10 @@ class DisclosureController extends ChangeNotifier {
   final VoidCallback? _onOpen;
   final VoidCallback? _onClose;
 
+  /// Whether the disclosure is currently closed.
   bool get closed => grouped ? !_group!.has(_key!) : _closed;
+
+  /// Whether the disclosure is currently opened.
   bool get opened => !closed;
 
   /// Set the disclosure state to new value
@@ -94,14 +105,21 @@ class DisclosureProvider extends InheritedNotifier<DisclosureController> {
           ),
         );
 
-  /// The [DisclosureController] from the closest instance of
-  /// this class that encloses the given context.
+  /// Provides access to the [DisclosureController]
+  /// from the closest DisclosureProvider instance.
+  static DisclosureController? maybeOf(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<DisclosureProvider>()
+        ?.notifier;
+  }
+
+  /// Provides access to the [DisclosureController] from the closest
+  /// DisclosureProvider instance, asserting that it exists.
   static DisclosureController of(BuildContext context) {
-    final DisclosureProvider? result =
-        context.dependOnInheritedWidgetOfExactType<DisclosureProvider>();
-    assert(
-        result != null, 'No Disclosure or DisclosureProvider found in context');
-    return result!.notifier!;
+    final notifier = maybeOf(context);
+    assert(notifier != null,
+        'No Disclosure or DisclosureProvider found in context');
+    return notifier!;
   }
 }
 
