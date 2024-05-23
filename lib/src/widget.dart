@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'controller.dart';
 import 'types.dart';
 import 'theme.dart';
+import 'group.dart';
 
 /// Simplify building custom UIs with accessible controls
 /// for showing and hiding content, like accordion panels.
@@ -9,7 +10,7 @@ class Disclosure extends StatelessWidget {
   /// Create a disclosure widget
   const Disclosure({
     super.key,
-    this.closed = false,
+    this.closed = true,
     this.onToggle,
     this.onOpen,
     this.onClose,
@@ -68,6 +69,8 @@ class Disclosure extends StatelessWidget {
 
     return DisclosureProvider(
       controller: DisclosureController(
+        key: key,
+        group: DisclosureGroup.maybeOf(context),
         closed: closed,
         onToggle: onToggle,
         onOpen: onOpen,

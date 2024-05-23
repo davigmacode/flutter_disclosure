@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'group.dart';
 
 typedef DisclosureBuilder = Widget Function(
   DisclosureController state,
@@ -8,36 +9,53 @@ typedef DisclosureBuilder = Widget Function(
 /// Controller of the disclosure state and how it behaves
 class DisclosureController extends ChangeNotifier {
   DisclosureController({
+    Key? key,
+    DisclosureGroupController? group,
     required bool closed,
     ValueChanged<bool>? onToggle,
     VoidCallback? onOpen,
     VoidCallback? onClose,
-  })  : _closed = closed,
+  })  : _key = key,
+        _closed = closed,
         _onToggle = onToggle,
         _onOpen = onOpen,
-        _onClose = onClose;
+        _onClose = onClose,
+        assert(
+          group == null || key != null,
+          'Grouped disclosure should have key',
+        ) {
+    _group = group?..addListener(() => notifyListeners());
+  }
+
+  final Key? _key;
+  late final DisclosureGroupController? _group;
+  bool get grouped => _group != null;
 
   bool _closed;
   final ValueChanged<bool>? _onToggle;
   final VoidCallback? _onOpen;
   final VoidCallback? _onClose;
 
-  bool get closed => _closed;
+  bool get closed => grouped ? !_group!.has(_key!) : _closed;
   bool get opened => !closed;
 
   /// Set the disclosure state to new value
   /// and notify its listeners.
-  void assign(bool expanded) {
-    if (_closed != expanded) {
-      _closed = expanded;
+  void assign(bool value) {
+    if (closed != value) {
+      if (grouped) {
+        _group!.toggle(_key!, !value);
+      } else {
+        _closed = value;
+      }
       notifyListeners();
-      _onToggle?.call(_closed);
+      _onToggle?.call(closed);
     }
   }
 
   /// Inverts the disclosure state (open/closed)
   void toggle() {
-    assign(!_closed);
+    assign(!closed);
   }
 
   /// Set the disclosure state to closed
