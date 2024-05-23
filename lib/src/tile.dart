@@ -16,7 +16,9 @@ class DisclosureTile extends ListTile {
     super.subtitle,
     super.leading,
     super.trailing,
-    super.enabled = true,
+    super.dense,
+    super.enabled,
+    super.onTap,
     this.closed = true,
     this.onToggle,
     this.onOpen,
@@ -25,7 +27,7 @@ class DisclosureTile extends ListTile {
     this.curve,
     this.wrapper,
     this.inset,
-    required this.children,
+    this.children = const [],
   });
 
   /// An initial value indicates whether the disclosure state is closed or not
@@ -59,6 +61,17 @@ class DisclosureTile extends ListTile {
 
   @override
   Widget build(BuildContext context) {
+    if (children.isEmpty) {
+      return ListTile(
+        title: title,
+        subtitle: subtitle,
+        leading: leading,
+        trailing: trailing,
+        onTap: onTap,
+        dense: dense,
+      );
+    }
+
     final theme = DisclosureTheme.of(context);
     final effectiveInset = inset ?? theme.tileInset;
     return Disclosure(
@@ -77,6 +90,7 @@ class DisclosureTile extends ListTile {
             leading: leading,
             trailing: trailing ?? defaultTrailing,
             onTap: children.isNotEmpty ? state.toggle : null,
+            dense: dense,
           );
         },
       ),
