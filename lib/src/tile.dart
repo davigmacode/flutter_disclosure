@@ -109,10 +109,12 @@ class DisclosureTile extends ListTile {
           );
         },
       ),
-      child: ListView(
-        shrinkWrap: true,
+      child: Padding(
         padding: effectiveInset,
-        children: children,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: children,
+        ),
       ),
     );
   }
