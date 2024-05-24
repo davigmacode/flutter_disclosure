@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:disclosure/disclosure.dart';
 import 'package:wx_text/wx_text.dart';
+import 'image.dart';
 
 void main() {
   runApp(const MyApp());
@@ -82,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
               multiple: false,
               clearable: true,
               padding: const EdgeInsets.all(15),
-              children: List<Widget>.generate(5, (i) {
+              children: List<Widget>.generate(3, (i) {
                 return Disclosure(
                   key: ValueKey('disclosure-$i'),
                   wrapper: (state, child) {
@@ -188,10 +189,10 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Card(
             clipBehavior: Clip.hardEdge,
             child: Disclosure(
-              secondary: DisclosureButton.basic(
-                child: Image.network(
+              secondary: const DisclosureButton.basic(
+                child: PlatformImage(
                   'https://picsum.photos/500?image=1',
-                  fit: BoxFit.cover,
+                  aspectRatio: 16 / 9,
                 ),
               ),
               child: Column(
@@ -203,22 +204,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                     ),
-                    children: [
-                      Image.network('https://picsum.photos/150?image=1'),
-                      Image.network('https://picsum.photos/150?image=2'),
-                      Image.network('https://picsum.photos/150?image=3'),
-                      Image.network('https://picsum.photos/150?image=4'),
-                      Image.network('https://picsum.photos/150?image=5'),
-                      Image.network('https://picsum.photos/150?image=6'),
-                      Image.network('https://picsum.photos/150?image=7'),
-                      Image.network('https://picsum.photos/150?image=8'),
-                      Image.network('https://picsum.photos/150?image=9'),
+                    children: const [
+                      PlatformImage('https://picsum.photos/150?image=1'),
+                      PlatformImage('https://picsum.photos/150?image=2'),
+                      PlatformImage('https://picsum.photos/150?image=3'),
+                      PlatformImage('https://picsum.photos/150?image=4'),
+                      PlatformImage('https://picsum.photos/150?image=5'),
+                      PlatformImage('https://picsum.photos/150?image=6'),
                     ],
                   ),
                   const Padding(
                     padding: EdgeInsets.all(15.0),
                     child: Text(
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                     ),
                   ),
                   const DisclosureButton(

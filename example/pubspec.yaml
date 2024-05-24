@@ -33,6 +33,7 @@ dependencies:
   disclosure:
     path: ../
   wx_text: ^3.0.0
+  web: ^0.5.1
 
 dev_dependencies:
   flutter_test:
