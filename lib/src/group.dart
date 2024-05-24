@@ -153,7 +153,7 @@ class DisclosureGroup extends StatelessWidget {
     this.onChanged,
     this.multiple = false,
     this.clearable = false,
-    this.padding,
+    this.padding = EdgeInsets.zero,
     required this.children,
   });
 
@@ -170,7 +170,7 @@ class DisclosureGroup extends StatelessWidget {
   final bool clearable;
 
   /// The padding around the disclosure group's children.
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry padding;
 
   /// The list of widgets that represent the disclosures.
   final List<Widget> children;
@@ -196,10 +196,12 @@ class DisclosureGroup extends StatelessWidget {
         multiple: multiple,
         clearable: clearable,
       ),
-      child: ListView(
-        shrinkWrap: true,
+      child: Padding(
         padding: padding,
-        children: children,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: children,
+        ),
       ),
     );
   }
