@@ -38,7 +38,7 @@ class DisclosureTile extends ListTile {
     this.duration,
     this.curve,
     this.wrapper,
-    this.inset,
+    this.insets,
     this.children = const [],
   });
 
@@ -64,7 +64,7 @@ class DisclosureTile extends ListTile {
   final DisclosureWrapper? wrapper;
 
   /// Specifies padding for the children.
-  final EdgeInsetsGeometry? inset;
+  final EdgeInsetsGeometry? insets;
 
   /// The widgets that are displayed when the tile expands.
   final List<Widget> children;
@@ -87,7 +87,7 @@ class DisclosureTile extends ListTile {
     }
 
     final theme = DisclosureTheme.of(context);
-    final effectiveInset = inset ?? theme.tileInset;
+    final effectiveInsets = insets ?? theme.tileInsets;
     return Disclosure(
       key: key,
       closed: closed,
@@ -97,7 +97,7 @@ class DisclosureTile extends ListTile {
       duration: duration,
       curve: curve,
       wrapper: wrapper,
-      inset: effectiveInset,
+      insets: effectiveInsets,
       header: DisclosureConsumer(
         builder: (state, child) {
           return ListTile(

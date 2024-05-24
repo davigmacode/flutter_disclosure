@@ -24,10 +24,10 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
   final IconData icon;
 
   /// Specifies padding for the child, and secondary (if exists).
-  final EdgeInsetsGeometry inset;
+  final EdgeInsetsGeometry insets;
 
   /// Specifies padding for tile children.
-  final EdgeInsetsGeometry tileInset;
+  final EdgeInsetsGeometry tileInsets;
 
   /// Creates a theme data that can be used for [DisclosureTheme].
   const DisclosureThemeData({
@@ -35,8 +35,8 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     required this.curve,
     required this.wrapper,
     required this.icon,
-    required this.inset,
-    required this.tileInset,
+    required this.insets,
+    required this.tileInsets,
   });
 
   /// An [DisclosureThemeData] with some reasonable default values.
@@ -45,8 +45,8 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     curve: Curves.linear,
     wrapper: defaultWrapper,
     icon: Icons.keyboard_arrow_down,
-    inset: EdgeInsets.zero,
-    tileInset: EdgeInsets.fromLTRB(25, 0, 0, 0),
+    insets: EdgeInsets.zero,
+    tileInsets: EdgeInsets.fromLTRB(25, 0, 0, 0),
   );
 
   static const defaultWrapper = _defaultWrapper;
@@ -60,8 +60,8 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
         curve = other?.curve ?? fallback.curve,
         wrapper = other?.wrapper ?? fallback.wrapper,
         icon = other?.icon ?? fallback.icon,
-        inset = other?.tileInset ?? fallback.inset,
-        tileInset = other?.tileInset ?? fallback.tileInset;
+        insets = other?.tileInsets ?? fallback.insets,
+        tileInsets = other?.tileInsets ?? fallback.tileInsets;
 
   /// Creates a copy of this [DisclosureThemeData] but with
   /// the given fields replaced with the new values.
@@ -71,16 +71,16 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     Curve? curve,
     DisclosureWrapper? wrapper,
     IconData? icon,
-    EdgeInsetsGeometry? inset,
-    EdgeInsetsGeometry? tileInset,
+    EdgeInsetsGeometry? insets,
+    EdgeInsetsGeometry? tileInsets,
   }) {
     return DisclosureThemeData(
       duration: duration ?? this.duration,
       curve: curve ?? this.curve,
       wrapper: wrapper ?? this.wrapper,
       icon: icon ?? this.icon,
-      inset: inset ?? this.inset,
-      tileInset: tileInset ?? this.tileInset,
+      insets: insets ?? this.insets,
+      tileInsets: tileInsets ?? this.tileInsets,
     );
   }
 
@@ -95,8 +95,8 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       curve: other.curve,
       wrapper: other.wrapper,
       icon: other.icon,
-      inset: other.inset,
-      tileInset: other.tileInset,
+      insets: other.insets,
+      tileInsets: other.tileInsets,
     );
   }
 
@@ -108,8 +108,8 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       curve: t < 0.5 ? curve : other.curve,
       wrapper: t < 0.5 ? wrapper : other.wrapper,
       icon: t < 0.5 ? icon : other.icon,
-      inset: EdgeInsetsGeometry.lerp(inset, other.inset, t)!,
-      tileInset: EdgeInsetsGeometry.lerp(tileInset, other.tileInset, t)!,
+      insets: EdgeInsetsGeometry.lerp(insets, other.insets, t)!,
+      tileInsets: EdgeInsetsGeometry.lerp(tileInsets, other.tileInsets, t)!,
     );
   }
 
@@ -118,8 +118,8 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
         'curve': curve,
         'wrapper': wrapper,
         'icon': icon,
-        'inset': inset,
-        'tileInset': tileInset,
+        'insets': insets,
+        'tileInsets': tileInsets,
       };
 
   @override

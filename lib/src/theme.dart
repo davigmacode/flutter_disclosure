@@ -41,8 +41,8 @@ class DisclosureTheme extends InheritedTheme {
                 curve: curve,
                 wrapper: wrapper,
                 icon: icon,
-                inset: inset,
-                tileInset: tileInset,
+                insets: inset,
+                tileInsets: tileInset,
               ),
           child: child,
         );
