@@ -17,11 +17,16 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
   /// The curve to apply when animating the parameters of this widget.
   final Curve curve;
 
+  /// A widget that wraps the entire disclosure content, allowing customization.
   final DisclosureWrapper wrapper;
 
+  /// Specifies the icon to be used within the disclosure icon.
   final IconData icon;
 
-  /// Specifies padding for children.
+  /// Specifies padding for the child, and secondary (if exists).
+  final EdgeInsetsGeometry inset;
+
+  /// Specifies padding for tile children.
   final EdgeInsetsGeometry tileInset;
 
   /// Creates a theme data that can be used for [DisclosureTheme].
@@ -30,6 +35,7 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     required this.curve,
     required this.wrapper,
     required this.icon,
+    required this.inset,
     required this.tileInset,
   });
 
@@ -39,6 +45,7 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     curve: Curves.linear,
     wrapper: defaultWrapper,
     icon: Icons.keyboard_arrow_down,
+    inset: EdgeInsets.zero,
     tileInset: EdgeInsets.fromLTRB(25, 0, 0, 0),
   );
 
@@ -53,6 +60,7 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
         curve = other?.curve ?? fallback.curve,
         wrapper = other?.wrapper ?? fallback.wrapper,
         icon = other?.icon ?? fallback.icon,
+        inset = other?.tileInset ?? fallback.inset,
         tileInset = other?.tileInset ?? fallback.tileInset;
 
   /// Creates a copy of this [DisclosureThemeData] but with
@@ -63,6 +71,7 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     Curve? curve,
     DisclosureWrapper? wrapper,
     IconData? icon,
+    EdgeInsetsGeometry? inset,
     EdgeInsetsGeometry? tileInset,
   }) {
     return DisclosureThemeData(
@@ -70,6 +79,7 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       curve: curve ?? this.curve,
       wrapper: wrapper ?? this.wrapper,
       icon: icon ?? this.icon,
+      inset: inset ?? this.inset,
       tileInset: tileInset ?? this.tileInset,
     );
   }
@@ -85,6 +95,7 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       curve: other.curve,
       wrapper: other.wrapper,
       icon: other.icon,
+      inset: other.inset,
       tileInset: other.tileInset,
     );
   }
@@ -97,6 +108,7 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       curve: t < 0.5 ? curve : other.curve,
       wrapper: t < 0.5 ? wrapper : other.wrapper,
       icon: t < 0.5 ? icon : other.icon,
+      inset: EdgeInsetsGeometry.lerp(inset, other.inset, t)!,
       tileInset: EdgeInsetsGeometry.lerp(tileInset, other.tileInset, t)!,
     );
   }
@@ -106,6 +118,7 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
         'curve': curve,
         'wrapper': wrapper,
         'icon': icon,
+        'inset': inset,
         'tileInset': tileInset,
       };
 

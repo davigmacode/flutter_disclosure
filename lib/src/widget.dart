@@ -28,6 +28,7 @@ class Disclosure extends StatelessWidget {
     this.onClose,
     this.duration,
     this.curve,
+    this.inset,
     this.wrapper,
     this.header,
     this.divider,
@@ -53,6 +54,9 @@ class Disclosure extends StatelessWidget {
   /// The curve to apply when animating the disclosure state changes.
   final Curve? curve;
 
+  /// Specifies padding for the child, and secondary (if exists).
+  final EdgeInsetsGeometry? inset;
+
   /// A widget that wraps the entire disclosure content, allowing customization.
   final DisclosureWrapper? wrapper;
 
@@ -74,6 +78,7 @@ class Disclosure extends StatelessWidget {
     final effectiveDuration = duration ?? theme.duration;
     final effectiveCurve = curve ?? theme.curve;
     final effectiveWrapper = wrapper ?? theme.wrapper;
+    final effectiveInset = inset ?? theme.inset;
 
     return DisclosureProvider(
       controller: DisclosureController(
@@ -91,8 +96,16 @@ class Disclosure extends StatelessWidget {
           final needDivider = hasHeader && hasChild;
 
           Widget collapsible = AnimatedCrossFade(
-            firstChild: secondary ?? Container(),
-            secondChild: child,
+            firstChild: secondary != null
+                ? Padding(
+                    padding: effectiveInset,
+                    child: secondary,
+                  )
+                : Container(),
+            secondChild: Padding(
+              padding: effectiveInset,
+              child: child,
+            ),
             crossFadeState: state.closed
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,

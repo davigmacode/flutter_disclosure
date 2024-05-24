@@ -97,6 +97,7 @@ class DisclosureTile extends ListTile {
       duration: duration,
       curve: curve,
       wrapper: wrapper,
+      inset: effectiveInset,
       header: DisclosureConsumer(
         builder: (state, child) {
           return ListTile(
@@ -109,12 +110,9 @@ class DisclosureTile extends ListTile {
           );
         },
       ),
-      child: Padding(
-        padding: effectiveInset,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: children,
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: children,
       ),
     );
   }
