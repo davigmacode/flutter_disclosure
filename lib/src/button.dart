@@ -130,6 +130,7 @@ class DisclosureButton extends StatelessWidget {
     super.key,
     this.action = DisclosureButtonAction.toggle,
     this.wrapper = DisclosureButtonWrapper.ripple,
+    this.padding = EdgeInsets.zero,
     required this.child,
   });
 
@@ -138,6 +139,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.close({
     super.key,
     this.wrapper = DisclosureButtonWrapper.ripple,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : action = DisclosureButtonAction.close;
 
@@ -146,6 +148,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.open({
     super.key,
     this.wrapper = DisclosureButtonWrapper.ripple,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : action = DisclosureButtonAction.open;
 
@@ -153,6 +156,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.basic({
     super.key,
     this.action = DisclosureButtonAction.toggle,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.basic;
 
@@ -160,6 +164,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.outlined({
     super.key,
     this.action = DisclosureButtonAction.toggle,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.outlined;
 
@@ -167,6 +172,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.filled({
     super.key,
     this.action = DisclosureButtonAction.toggle,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.filled;
 
@@ -174,6 +180,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.tonal({
     super.key,
     this.action = DisclosureButtonAction.toggle,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.tonal;
 
@@ -181,6 +188,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.text({
     super.key,
     this.action = DisclosureButtonAction.toggle,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.text;
 
@@ -188,6 +196,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.icon({
     super.key,
     this.action = DisclosureButtonAction.toggle,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.icon;
 
@@ -195,6 +204,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.iconFilled({
     super.key,
     this.action = DisclosureButtonAction.toggle,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.iconFilled;
 
@@ -202,6 +212,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.iconTonal({
     super.key,
     this.action = DisclosureButtonAction.toggle,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.iconTonal;
 
@@ -209,6 +220,7 @@ class DisclosureButton extends StatelessWidget {
   const DisclosureButton.iconOutlined({
     super.key,
     this.action = DisclosureButtonAction.toggle,
+    this.padding = EdgeInsets.zero,
     required this.child,
   }) : wrapper = DisclosureButtonWrapper.iconOutlined;
 
@@ -218,13 +230,19 @@ class DisclosureButton extends StatelessWidget {
   /// Invoked to construct the button's container
   final DisclosureButtonBuilder wrapper;
 
+  /// Specifies padding for the child, and secondary (if exists).
+  final EdgeInsetsGeometry padding;
+
   /// The widget below this widget in the tree.
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return DisclosureConsumer(
-      child: child,
+      child: Padding(
+        padding: padding,
+        child: child,
+      ),
       builder: (state, child) {
         child = AbsorbPointer(child: child);
         return wrapper(action(state), child);
