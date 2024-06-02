@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'theme.dart';
 
 /// A controller for managing the state of a disclosure group.
 class DisclosureGroupController extends ChangeNotifier {
@@ -14,6 +15,7 @@ class DisclosureGroupController extends ChangeNotifier {
     ValueChanged<List<Key>>? onChanged,
     this.multiple = false,
     this.clearable = false,
+    this.insets = EdgeInsets.zero,
   })  : _value = Set.from(value),
         _onChanged = onChanged;
 
@@ -28,6 +30,9 @@ class DisclosureGroupController extends ChangeNotifier {
 
   /// Whether all disclosures can be cleared.
   final bool clearable;
+
+  /// The padding around the disclosure group's children.
+  final EdgeInsetsGeometry insets;
 
   /// Returns the current set of active disclosures.
   List<Key> get value => _value.toList();
@@ -151,9 +156,9 @@ class DisclosureGroup extends StatelessWidget {
     super.key,
     this.value = const [],
     this.onChanged,
-    this.multiple = false,
-    this.clearable = false,
-    this.padding = EdgeInsets.zero,
+    this.multiple,
+    this.clearable,
+    this.insets,
     required this.children,
   });
 
@@ -164,13 +169,13 @@ class DisclosureGroup extends StatelessWidget {
   final ValueChanged<List<Key>>? onChanged;
 
   /// Whether multiple disclosures can be selected simultaneously.
-  final bool multiple;
+  final bool? multiple;
 
   /// Whether all disclosures can be cleared.
-  final bool clearable;
+  final bool? clearable;
 
   /// The padding around the disclosure group's children.
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? insets;
 
   /// The list of widgets that represent the disclosures.
   final List<Widget> children;
@@ -189,15 +194,38 @@ class DisclosureGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool? effectiveMultiple = multiple;
+    bool? effectiveClearable = clearable;
+    EdgeInsetsGeometry? effectiveInsets = insets;
+
+    if (effectiveMultiple == null ||
+        effectiveClearable == null ||
+        effectiveInsets == null) {
+      final parent = DisclosureGroup.maybeOf(context);
+      effectiveMultiple ??= parent?.multiple;
+      effectiveClearable ??= parent?.clearable;
+      effectiveInsets ??= parent?.insets;
+    }
+
+    if (effectiveMultiple == null ||
+        effectiveClearable == null ||
+        effectiveInsets == null) {
+      final theme = DisclosureTheme.of(context);
+      effectiveMultiple ??= theme.groupMultiple;
+      effectiveClearable ??= theme.groupClearable;
+      effectiveInsets ??= theme.groupInsets;
+    }
+
     return DisclosureGroupProvider(
       controller: DisclosureGroupController(
         value: value,
         onChanged: onChanged,
-        multiple: multiple,
-        clearable: clearable,
+        multiple: effectiveMultiple,
+        clearable: effectiveClearable,
+        insets: effectiveInsets,
       ),
       child: Padding(
-        padding: padding,
+        padding: effectiveInsets,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: children,
