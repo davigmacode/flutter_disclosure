@@ -103,7 +103,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   header: DisclosureButton(
                     child: ListTile(
                       title: Text('Disclosure Panel ${i + 1}'),
-                      trailing: const DisclosureIcon(),
+                      trailing: const DisclosureSwitcher(
+                        opened: Icon(Icons.arrow_drop_down_circle),
+                        closed: Icon(Icons.arrow_drop_down),
+                      ),
                     ),
                   ),
                   divider: const Divider(height: 1),

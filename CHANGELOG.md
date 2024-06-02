@@ -1,3 +1,7 @@
+## 2.2.0
+
+* Added disclosure switcher
+
 ## 2.1.1
 
 * Fixed default tile key
