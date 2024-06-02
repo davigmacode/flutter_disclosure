@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onTap: () {},
                       ),
                       DisclosureTile(
-                        title: const Text('Nested Menu'),
+                        title: const Text('Nested Menu 1'),
                         children: [
                           DisclosureTile(
                             title: const Text('Menu Item'),
@@ -171,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                       DisclosureTile(
-                        title: const Text('Nested Menu'),
+                        title: const Text('Nested Menu 2'),
                         children: [
                           DisclosureTile(
                             title: const Text('Menu Item'),
@@ -204,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         const SizedBox(height: 20),
         Example(
-          title: 'Complex implementation',
+          title: 'With secondary widget',
           child: Card(
             clipBehavior: Clip.hardEdge,
             child: Disclosure(
