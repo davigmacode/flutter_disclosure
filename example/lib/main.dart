@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      showPerformanceOverlay: false,
       home: const MyHomePage(),
     );
   }
@@ -82,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: DisclosureGroup(
               multiple: false,
               clearable: true,
-              padding: const EdgeInsets.all(15),
+              insets: const EdgeInsets.all(15),
               children: List<Widget>.generate(3, (i) {
                 return Disclosure(
                   key: ValueKey('disclosure-$i'),
@@ -137,19 +138,37 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: child,
                 );
               },
-              child: ListView(
-                shrinkWrap: true,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   DisclosureTile(
                     title: const Text('Menu Item'),
                     onTap: () {},
                   ),
                   DisclosureTile(
+                    insets: const EdgeInsets.only(left: 25),
                     title: const Text('Nested Menu'),
                     children: [
                       DisclosureTile(
                         title: const Text('Menu Item'),
                         onTap: () {},
+                      ),
+                      DisclosureTile(
+                        title: const Text('Nested Menu'),
+                        children: [
+                          DisclosureTile(
+                            title: const Text('Menu Item'),
+                            onTap: () {},
+                          ),
+                          DisclosureTile(
+                            title: const Text('Menu Item'),
+                            onTap: () {},
+                          ),
+                          DisclosureTile(
+                            title: const Text('Menu Item'),
+                            onTap: () {},
+                          ),
+                        ],
                       ),
                       DisclosureTile(
                         title: const Text('Nested Menu'),
@@ -200,6 +219,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   GridView(
                     shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
@@ -237,13 +257,11 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Disclosure(
               closed: true,
               secondary: DisclosureButton(
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                padding: EdgeInsets.all(20.0),
+                child: Text(
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               child: Padding(

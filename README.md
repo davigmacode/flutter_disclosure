@@ -55,7 +55,7 @@ Disclosure(
 DisclosureGroup(
   multiple: false,
   clearable: true,
-  padding: const EdgeInsets.all(15),
+  insets: const EdgeInsets.all(15),
   children: List<Widget>.generate(5, (i) {
     return Disclosure(
       key: ValueKey('disclosure-$i'),

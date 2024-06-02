@@ -1,3 +1,11 @@
+## 2.1.0
+
+* Use column instead of list view for disclosure group
+* Added button padding
+* Added insets prop to child and secondary widget
+* Get group insets, multiple, and clearable from theme
+* Get tile leading, trailing, insets, multiple, and clearable from theme
+
 ## 2.0.0
 
 * Groupable disclosure.
