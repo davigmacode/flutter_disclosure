@@ -113,7 +113,7 @@ class DisclosureTile extends ListTile {
     }
 
     return Disclosure(
-      key: key ?? ValueKey(title),
+      key: key ?? ValueKey(title.hashCode),
       closed: closed,
       onToggle: onToggle,
       onOpen: onOpen,
