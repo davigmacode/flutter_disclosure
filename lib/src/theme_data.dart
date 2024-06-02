@@ -26,8 +26,14 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
   /// Specifies padding for the child, and secondary (if exists).
   final EdgeInsetsGeometry insets;
 
-  /// Specifies padding for tile children.
-  final EdgeInsetsGeometry tileInsets;
+  /// Specifies padding for group children.
+  final EdgeInsetsGeometry groupInsets;
+
+  /// Whether multiple group children can be selected simultaneously.
+  final bool groupMultiple;
+
+  /// Whether all group children can be cleared.
+  final bool groupClearable;
 
   /// Creates a theme data that can be used for [DisclosureTheme].
   const DisclosureThemeData({
@@ -36,7 +42,9 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     required this.wrapper,
     required this.icon,
     required this.insets,
-    required this.tileInsets,
+    required this.groupInsets,
+    required this.groupMultiple,
+    required this.groupClearable,
   });
 
   /// An [DisclosureThemeData] with some reasonable default values.
@@ -46,7 +54,9 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     wrapper: defaultWrapper,
     icon: Icons.keyboard_arrow_down,
     insets: EdgeInsets.zero,
-    tileInsets: EdgeInsets.fromLTRB(25, 0, 0, 0),
+    groupInsets: EdgeInsets.zero,
+    groupMultiple: false,
+    groupClearable: false,
   );
 
   static const defaultWrapper = _defaultWrapper;
@@ -60,8 +70,10 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
         curve = other?.curve ?? fallback.curve,
         wrapper = other?.wrapper ?? fallback.wrapper,
         icon = other?.icon ?? fallback.icon,
-        insets = other?.tileInsets ?? fallback.insets,
-        tileInsets = other?.tileInsets ?? fallback.tileInsets;
+        insets = other?.insets ?? fallback.insets,
+        groupInsets = other?.groupInsets ?? fallback.groupInsets,
+        groupMultiple = other?.groupMultiple ?? fallback.groupMultiple,
+        groupClearable = other?.groupClearable ?? fallback.groupClearable;
 
   /// Creates a copy of this [DisclosureThemeData] but with
   /// the given fields replaced with the new values.
@@ -72,7 +84,9 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     DisclosureWrapper? wrapper,
     IconData? icon,
     EdgeInsetsGeometry? insets,
-    EdgeInsetsGeometry? tileInsets,
+    EdgeInsetsGeometry? groupInsets,
+    bool? groupMultiple,
+    bool? groupClearable,
   }) {
     return DisclosureThemeData(
       duration: duration ?? this.duration,
@@ -80,7 +94,9 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       wrapper: wrapper ?? this.wrapper,
       icon: icon ?? this.icon,
       insets: insets ?? this.insets,
-      tileInsets: tileInsets ?? this.tileInsets,
+      groupInsets: groupInsets ?? this.groupInsets,
+      groupMultiple: groupMultiple ?? this.groupMultiple,
+      groupClearable: groupClearable ?? this.groupClearable,
     );
   }
 
@@ -96,7 +112,9 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       wrapper: other.wrapper,
       icon: other.icon,
       insets: other.insets,
-      tileInsets: other.tileInsets,
+      groupInsets: other.groupInsets,
+      groupMultiple: other.groupMultiple,
+      groupClearable: other.groupClearable,
     );
   }
 
@@ -109,7 +127,9 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       wrapper: t < 0.5 ? wrapper : other.wrapper,
       icon: t < 0.5 ? icon : other.icon,
       insets: EdgeInsetsGeometry.lerp(insets, other.insets, t)!,
-      tileInsets: EdgeInsetsGeometry.lerp(tileInsets, other.tileInsets, t)!,
+      groupInsets: EdgeInsetsGeometry.lerp(groupInsets, other.groupInsets, t)!,
+      groupMultiple: t < 0.5 ? groupMultiple : other.groupMultiple,
+      groupClearable: t < 0.5 ? groupClearable : other.groupClearable,
     );
   }
 
@@ -119,7 +139,9 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
         'wrapper': wrapper,
         'icon': icon,
         'insets': insets,
-        'tileInsets': tileInsets,
+        'groupInsets': groupInsets,
+        'groupMultiple': groupMultiple,
+        'groupClearable': groupClearable,
       };
 
   @override
