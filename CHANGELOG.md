@@ -1,3 +1,7 @@
+## 2.1.1
+
+* Fixed default tile key
+
 ## 2.1.0
 
 * Use column instead of list view for disclosure group
