@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'controller.dart';
 import 'widget.dart';
-import 'icon.dart';
+import 'group.dart';
 import 'types.dart';
 import 'theme.dart';
 
@@ -39,6 +39,8 @@ class DisclosureTile extends ListTile {
     this.curve,
     this.wrapper,
     this.insets,
+    this.multiple,
+    this.clearable,
     this.children = const [],
   });
 
@@ -66,30 +68,52 @@ class DisclosureTile extends ListTile {
   /// Specifies padding for the children.
   final EdgeInsetsGeometry? insets;
 
+  /// Whether multiple children can be selected simultaneously.
+  final bool? multiple;
+
+  /// Whether all children can be cleared.
+  final bool? clearable;
+
   /// The widgets that are displayed when the tile expands.
   final List<Widget> children;
-
-  /// Provides the default trailing icon if no trailing widget is specified.
-  Widget? get defaultTrailing =>
-      children.isNotEmpty ? const DisclosureIcon() : null;
 
   @override
   Widget build(BuildContext context) {
     if (children.isEmpty) {
+      final theme = DisclosureTheme.of(context);
+      final defaultLeading = theme.tileLeadingBuilder(children.isNotEmpty);
+      final defaultTrailing = theme.tileTrailingBuilder(children.isNotEmpty);
       return ListTile(
         title: title,
         subtitle: subtitle,
-        leading: leading,
-        trailing: trailing,
+        leading: leading ?? defaultLeading,
+        trailing: trailing ?? defaultTrailing,
         onTap: onTap,
         dense: dense,
       );
     }
 
-    final theme = DisclosureTheme.of(context);
-    final effectiveInsets = insets ?? theme.tileInsets;
+    bool? effectiveMultiple = multiple;
+    bool? effectiveClearable = clearable;
+    EdgeInsetsGeometry? effectiveInsets = insets;
+    Widget? effectiveLeading = leading;
+    Widget? effectiveTrailing = trailing;
+
+    if (effectiveMultiple == null ||
+        effectiveClearable == null ||
+        effectiveInsets == null ||
+        effectiveLeading == null ||
+        effectiveTrailing == null) {
+      final theme = DisclosureTheme.of(context);
+      effectiveMultiple ??= theme.tileMultiple;
+      effectiveClearable ??= theme.tileClearable;
+      effectiveInsets ??= theme.tileInsets;
+      effectiveLeading ??= theme.tileLeadingBuilder(children.isNotEmpty);
+      effectiveTrailing ??= theme.tileTrailingBuilder(children.isNotEmpty);
+    }
+
     return Disclosure(
-      key: key,
+      key: key ?? ValueKey(title),
       closed: closed,
       onToggle: onToggle,
       onOpen: onOpen,
@@ -97,21 +121,22 @@ class DisclosureTile extends ListTile {
       duration: duration,
       curve: curve,
       wrapper: wrapper,
-      insets: effectiveInsets,
       header: DisclosureConsumer(
         builder: (state, child) {
           return ListTile(
             title: title,
             subtitle: subtitle,
-            leading: leading,
-            trailing: trailing ?? defaultTrailing,
+            leading: effectiveLeading,
+            trailing: effectiveTrailing,
             onTap: children.isNotEmpty ? state.toggle : null,
             dense: dense,
           );
         },
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: DisclosureGroup(
+        multiple: effectiveMultiple,
+        clearable: effectiveClearable,
+        insets: effectiveInsets,
         children: children,
       ),
     );

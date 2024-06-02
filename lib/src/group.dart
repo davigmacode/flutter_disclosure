@@ -15,7 +15,6 @@ class DisclosureGroupController extends ChangeNotifier {
     ValueChanged<List<Key>>? onChanged,
     this.multiple = false,
     this.clearable = false,
-    this.insets = EdgeInsets.zero,
   })  : _value = Set.from(value),
         _onChanged = onChanged;
 
@@ -30,9 +29,6 @@ class DisclosureGroupController extends ChangeNotifier {
 
   /// Whether all disclosures can be cleared.
   final bool clearable;
-
-  /// The padding around the disclosure group's children.
-  final EdgeInsetsGeometry insets;
 
   /// Returns the current set of active disclosures.
   List<Key> get value => _value.toList();
@@ -201,15 +197,6 @@ class DisclosureGroup extends StatelessWidget {
     if (effectiveMultiple == null ||
         effectiveClearable == null ||
         effectiveInsets == null) {
-      final parent = DisclosureGroup.maybeOf(context);
-      effectiveMultiple ??= parent?.multiple;
-      effectiveClearable ??= parent?.clearable;
-      effectiveInsets ??= parent?.insets;
-    }
-
-    if (effectiveMultiple == null ||
-        effectiveClearable == null ||
-        effectiveInsets == null) {
       final theme = DisclosureTheme.of(context);
       effectiveMultiple ??= theme.groupMultiple;
       effectiveClearable ??= theme.groupClearable;
@@ -222,13 +209,17 @@ class DisclosureGroup extends StatelessWidget {
         onChanged: onChanged,
         multiple: effectiveMultiple,
         clearable: effectiveClearable,
-        insets: effectiveInsets,
       ),
-      child: Padding(
-        padding: effectiveInsets,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: children,
+      child: DisclosureTheme.merge(
+        groupMultiple: effectiveMultiple,
+        groupClearable: effectiveClearable,
+        groupInsets: effectiveInsets,
+        child: Padding(
+          padding: effectiveInsets,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: children,
+          ),
         ),
       ),
     );

@@ -30,6 +30,11 @@ class DisclosureTheme extends InheritedTheme {
     EdgeInsetsGeometry? groupInsets,
     bool? groupMultiple,
     bool? groupClearable,
+    EdgeInsetsGeometry? tileInsets,
+    bool? tileMultiple,
+    bool? tileClearable,
+    DisclosureTileExtrasBuilder? tileLeadingBuilder,
+    DisclosureTileExtrasBuilder? tileTrailingBuilder,
     DisclosureThemeData? data,
     required Widget child,
   }) {
@@ -47,6 +52,11 @@ class DisclosureTheme extends InheritedTheme {
                 groupInsets: groupInsets,
                 groupMultiple: groupMultiple,
                 groupClearable: groupClearable,
+                tileInsets: tileInsets,
+                tileMultiple: tileMultiple,
+                tileClearable: tileClearable,
+                tileLeadingBuilder: tileLeadingBuilder,
+                tileTrailingBuilder: tileTrailingBuilder,
               ),
           child: child,
         );

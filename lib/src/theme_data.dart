@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'controller.dart';
 import 'types.dart';
+import 'icon.dart';
 
 /// Defines the visual properties of [Disclosure].
 ///
@@ -35,6 +36,21 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
   /// Whether all group children can be cleared.
   final bool groupClearable;
 
+  /// Specifies padding for tile children.
+  final EdgeInsetsGeometry tileInsets;
+
+  /// Whether multiple tile children can be selected simultaneously.
+  final bool tileMultiple;
+
+  /// Whether all tile children can be cleared.
+  final bool tileClearable;
+
+  /// A callback that is invoked to provides the default leading widget.
+  final DisclosureTileExtrasBuilder tileLeadingBuilder;
+
+  /// A callback that is invoked to provides the default trailing widget.
+  final DisclosureTileExtrasBuilder tileTrailingBuilder;
+
   /// Creates a theme data that can be used for [DisclosureTheme].
   const DisclosureThemeData({
     required this.duration,
@@ -45,6 +61,11 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     required this.groupInsets,
     required this.groupMultiple,
     required this.groupClearable,
+    required this.tileInsets,
+    required this.tileMultiple,
+    required this.tileClearable,
+    required this.tileLeadingBuilder,
+    required this.tileTrailingBuilder,
   });
 
   /// An [DisclosureThemeData] with some reasonable default values.
@@ -57,11 +78,26 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     groupInsets: EdgeInsets.zero,
     groupMultiple: false,
     groupClearable: false,
+    tileInsets: EdgeInsets.only(left: 25),
+    tileMultiple: false,
+    tileClearable: false,
+    tileLeadingBuilder: defaultTileLeadingBuilder,
+    tileTrailingBuilder: defaultTileTrailingBuilder,
   );
 
   static const defaultWrapper = _defaultWrapper;
   static Widget _defaultWrapper(DisclosureController state, Widget child) {
     return child;
+  }
+
+  static const defaultTileLeadingBuilder = _defaultTileLeadingBuilder;
+  static Widget? _defaultTileLeadingBuilder(bool hasChildren) {
+    return null;
+  }
+
+  static const defaultTileTrailingBuilder = _defaultTileTrailingBuilder;
+  static Widget? _defaultTileTrailingBuilder(bool hasChildren) {
+    return hasChildren ? const DisclosureIcon() : null;
   }
 
   /// Creates a [DisclosureThemeData] from another one that probably null.
@@ -73,7 +109,14 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
         insets = other?.insets ?? fallback.insets,
         groupInsets = other?.groupInsets ?? fallback.groupInsets,
         groupMultiple = other?.groupMultiple ?? fallback.groupMultiple,
-        groupClearable = other?.groupClearable ?? fallback.groupClearable;
+        groupClearable = other?.groupClearable ?? fallback.groupClearable,
+        tileInsets = other?.tileInsets ?? fallback.tileInsets,
+        tileMultiple = other?.tileMultiple ?? fallback.tileMultiple,
+        tileClearable = other?.tileClearable ?? fallback.tileClearable,
+        tileLeadingBuilder =
+            other?.tileLeadingBuilder ?? fallback.tileLeadingBuilder,
+        tileTrailingBuilder =
+            other?.tileTrailingBuilder ?? fallback.tileTrailingBuilder;
 
   /// Creates a copy of this [DisclosureThemeData] but with
   /// the given fields replaced with the new values.
@@ -87,6 +130,11 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
     EdgeInsetsGeometry? groupInsets,
     bool? groupMultiple,
     bool? groupClearable,
+    EdgeInsetsGeometry? tileInsets,
+    bool? tileMultiple,
+    bool? tileClearable,
+    DisclosureTileExtrasBuilder? tileLeadingBuilder,
+    DisclosureTileExtrasBuilder? tileTrailingBuilder,
   }) {
     return DisclosureThemeData(
       duration: duration ?? this.duration,
@@ -97,6 +145,11 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       groupInsets: groupInsets ?? this.groupInsets,
       groupMultiple: groupMultiple ?? this.groupMultiple,
       groupClearable: groupClearable ?? this.groupClearable,
+      tileInsets: tileInsets ?? this.tileInsets,
+      tileMultiple: tileMultiple ?? this.tileMultiple,
+      tileClearable: tileClearable ?? this.tileClearable,
+      tileLeadingBuilder: tileLeadingBuilder ?? this.tileLeadingBuilder,
+      tileTrailingBuilder: tileTrailingBuilder ?? this.tileTrailingBuilder,
     );
   }
 
@@ -115,6 +168,11 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       groupInsets: other.groupInsets,
       groupMultiple: other.groupMultiple,
       groupClearable: other.groupClearable,
+      tileInsets: other.tileInsets,
+      tileMultiple: other.tileMultiple,
+      tileClearable: other.tileClearable,
+      tileLeadingBuilder: other.tileLeadingBuilder,
+      tileTrailingBuilder: other.tileTrailingBuilder,
     );
   }
 
@@ -130,6 +188,13 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
       groupInsets: EdgeInsetsGeometry.lerp(groupInsets, other.groupInsets, t)!,
       groupMultiple: t < 0.5 ? groupMultiple : other.groupMultiple,
       groupClearable: t < 0.5 ? groupClearable : other.groupClearable,
+      tileInsets: EdgeInsetsGeometry.lerp(tileInsets, other.tileInsets, t)!,
+      tileMultiple: t < 0.5 ? tileMultiple : other.tileMultiple,
+      tileClearable: t < 0.5 ? tileClearable : other.tileClearable,
+      tileLeadingBuilder:
+          t < 0.5 ? tileLeadingBuilder : other.tileLeadingBuilder,
+      tileTrailingBuilder:
+          t < 0.5 ? tileTrailingBuilder : other.tileTrailingBuilder,
     );
   }
 
@@ -142,6 +207,11 @@ class DisclosureThemeData extends ThemeExtension<DisclosureThemeData>
         'groupInsets': groupInsets,
         'groupMultiple': groupMultiple,
         'groupClearable': groupClearable,
+        'tileInsets': tileInsets,
+        'tileMultiple': tileMultiple,
+        'tileClearable': tileClearable,
+        'tileLeadingBuilder': tileLeadingBuilder,
+        'tileTrailingBuilder': tileTrailingBuilder,
       };
 
   @override
