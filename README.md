@@ -1,3 +1,7 @@
+# disclosure
+
+> [!IMPORTANT]
+> **Repository Moved to Monorepo**: Active development of $(System.Collections.Hashtable.Name) has migrated to the official [**davigmacode/flutter_wx**](https://github.com/davigmacode/flutter_wx) monorepo under [packages/disclosure](https://github.com/davigmacode/flutter_wx/tree/main/packages/disclosure).
 [![Pub Version](https://img.shields.io/pub/v/disclosure)](https://pub.dev/packages/disclosure) ![GitHub](https://img.shields.io/github/license/davigmacode/flutter_disclosure) [![GitHub](https://badgen.net/badge/icon/buymeacoffee?icon=buymeacoffee&color=yellow&label)](https://www.buymeacoffee.com/davigmacode) [![GitHub](https://badgen.net/badge/icon/ko-fi?icon=kofi&color=red&label)](https://ko-fi.com/davigmacode)
 
 Simplify building custom UIs with accessible controls for showing and hiding content, like accordion panels.
